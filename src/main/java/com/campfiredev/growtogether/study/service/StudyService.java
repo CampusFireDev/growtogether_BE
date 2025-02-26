@@ -28,7 +28,7 @@ public class StudyService {
 
     public StudyDTO createStudy(StudyDTO dto) {
         validateDates(dto.getStudyStartDate(), dto.getStudyEndDate());
-        
+
         List<SkillEntity> skills = skillRepository.findBySkillNameIn(dto.getSkillNames());
 
         if(dto.getSkillNames().size() != skills.size()){
