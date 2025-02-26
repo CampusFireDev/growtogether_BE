@@ -7,6 +7,7 @@ import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @EntityListeners(AuditingEntityListener.class)
 @Entity
@@ -33,7 +34,10 @@ public class BootCampReview extends BaseEntity {
     private ProgramCourse programCourse;
 
     @Column(nullable = false)
-    private Long viewCount;
+    private Long viewCount = 0L;
+
+    @Column(nullable = false)
+    private Integer likeCount = 0;
 
     @Column(nullable = false)
     private String bootCampName;
@@ -51,8 +55,13 @@ public class BootCampReview extends BaseEntity {
     private Integer assistantSatisfaction;
 
     @Column(nullable = false)
-    private Integer likeCount;
+    private Integer programSatisfaction;
+
 
     //user 추가 예정
+
+    //후기 삭제시 댓글도 같이 삭제되도록
+    @OneToMany(mappedBy = "bootCampReview",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<BootCampComment> comments;
 
 }

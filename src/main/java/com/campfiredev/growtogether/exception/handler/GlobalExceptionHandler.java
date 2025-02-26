@@ -7,6 +7,7 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import com.campfiredev.growtogether.exception.custom.CustomException;
 import com.campfiredev.growtogether.exception.response.ErrorResponse;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -39,6 +40,21 @@ public class GlobalExceptionHandler {
 
     return ResponseEntity.status(BAD_REQUEST)
         .body(new ErrorResponse(INVALID_INPUT_DATA, description));
+  }
+
+  /**
+   * JSON 요청 데이터 파싱 오류 처리 핸들러
+   *
+   * 클라이언트가 잘못된 형식의 JSON 데이터를 전송했을때 발생하는 예외처이
+   * ex) Integer 필드에서 문자가 포함되었을때 발생하는 에러
+   *
+   * @param e 발생한 `HttpMessageNotReadableException`
+   * @return 400 Bad Request 응답과 함께 에러 메시지 반환
+   */
+  @ExceptionHandler(HttpMessageNotReadableException.class)
+  public ResponseEntity<ErrorResponse> handleHttpMessageNotReadeableException(HttpMessageNotReadableException e) {
+
+    return ResponseEntity.status(BAD_REQUEST).body(new ErrorResponse(INVALID_INPUT_DATA, e.getMessage()));
   }
 
   /**
