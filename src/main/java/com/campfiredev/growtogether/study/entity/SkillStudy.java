@@ -11,7 +11,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SkillStudy extends BaseEntity {
+public class SkillStudy {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,5 +25,8 @@ public class SkillStudy extends BaseEntity {
     @JoinColumn(name = "study_id")
     private Study study;
 
+    public void linkStudy(Study study) {
+        this.study = study;
+    }
 }
 
