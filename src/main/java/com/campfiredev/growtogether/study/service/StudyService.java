@@ -12,7 +12,6 @@ import com.campfiredev.growtogether.study.repository.StudyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 
 import static com.campfiredev.growtogether.exception.response.ErrorCode.END_DATE_AFTER_START_DATE;
@@ -47,18 +46,6 @@ public class StudyService {
         study.addSkillStudies(skillStudyRepository.saveAll(skillStudies));
 
         return StudyDTO.fromEntity(study);
-    }
-
-    private void validateDates(Date studyStartDate, Date studyEndDate) {
-        Date currentDate = new Date();
-
-        if (studyStartDate.before(currentDate)) {
-            throw new CustomException(START_DATE_PAST);
-        }
-
-        if (studyEndDate.before(studyStartDate)) {
-            throw new CustomException(END_DATE_AFTER_START_DATE);
-        }
     }
 
     public List<StudyDTO> getAllStudies() {
