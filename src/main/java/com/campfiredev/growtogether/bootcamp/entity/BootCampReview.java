@@ -34,7 +34,10 @@ public class BootCampReview extends BaseEntity {
     private ProgramCourse programCourse;
 
     @Column(nullable = false)
-    private Long viewCount;
+    private Long viewCount = 0L;
+
+    @Column(nullable = false)
+    private Integer likeCount = 0;
 
     @Column(nullable = false)
     private Integer likeCount;
