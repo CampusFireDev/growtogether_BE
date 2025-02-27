@@ -4,12 +4,12 @@ import com.campfiredev.growtogether.mail.service.EmailService;
 import com.campfiredev.growtogether.member.dto.MemberDto;
 import com.campfiredev.growtogether.member.entity.MemberEntity;
 import com.campfiredev.growtogether.member.entity.UserSkillEntity;
+
 import com.campfiredev.growtogether.member.repository.MemberRepository;
 import com.campfiredev.growtogether.member.repository.UserSkillRepository;
-import com.campfiredev.growtogether.skill.repository.SkillRepository;
 import com.campfiredev.growtogether.skill.entity.SkillEntity;
+import com.campfiredev.growtogether.skill.repository.SkillRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -124,7 +124,7 @@ public class MemberService {
             throw new IllegalArgumentException("사용자의 프로필 이미지가 없습니다.");
         }
 
-        // ⃣ S3에서 파일 URL 반환
+        // S3에서 파일 URL 반환
         return s3Service.getFileUrl(member.getProfileImageKey());
     }
 

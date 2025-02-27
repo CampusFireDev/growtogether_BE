@@ -1,7 +1,6 @@
 package com.campfiredev.growtogether.skill.controller;
 
 import com.campfiredev.growtogether.skill.dto.SkillDto;
-import com.campfiredev.growtogether.skill.entity.SkillEntity;
 import com.campfiredev.growtogether.skill.repository.SkillRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +22,7 @@ public class SkillController {
     public ResponseEntity<List<SkillDto>> getAllSkills() {
         List<SkillDto> skills = skillRepository.findAll()
                 .stream()
-                .map(SkillDto::fromEntity) // 엔티티 -> DTO 변환
+                .map(SkillDto::fromEntity)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(skills);
     }

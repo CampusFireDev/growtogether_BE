@@ -28,6 +28,8 @@ public class UserSkillEntity {
     @JoinColumn(name = "skill_id", nullable = false)
     private SkillEntity skill;
 
+
+
     public UserSkillEntity(MemberEntity member, SkillEntity skill) {
         this.member = member;
         this.skill = skill;
