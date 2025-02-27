@@ -1,10 +1,9 @@
 package com.campfiredev.growtogether.bootcamp.controller;
 
 import com.campfiredev.growtogether.bootcamp.dto.BootCampReviewCreateDto;
-import com.campfiredev.growtogether.bootcamp.dto.BootCampReviewRequest;
+import com.campfiredev.growtogether.bootcamp.dto.BootCampReviewResponseDto;
 import com.campfiredev.growtogether.bootcamp.dto.BootCampReviewUpdateDto;
 import com.campfiredev.growtogether.bootcamp.service.BootCampReviewService;
-import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 public class BootCampReviewController {
 
     private final BootCampReviewService reviewService;
+    private final BootCampReviewService bootCampReviewService;
 
     /**
      * 부트캠프 리뷰 등록
@@ -61,6 +61,25 @@ public class BootCampReviewController {
 
     /**
      * 부트캠프 조회
+     * 최신순 및 인기순 조회
+     * 한 페이지당 9개
+     */
+    @GetMapping
+    public ResponseEntity<BootCampReviewResponseDto.PageResponse> getBootCampReviews(
+            @RequestParam(defaultValue = "0") int page ,
+            @RequestParam(defaultValue = "new") String sortType){
+
+        return ResponseEntity.ok(bootCampReviewService.getBootCampReviews(page,sortType));
+    }
+
+
+
+    /**
+     * 부트캠프 상세 조회
      */
 
+
+    /**
+     * 부트캠프 검색 기능
+     */
 }

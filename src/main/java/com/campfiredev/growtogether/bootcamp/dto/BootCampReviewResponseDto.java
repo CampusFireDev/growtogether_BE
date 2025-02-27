@@ -5,9 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.domain.Page;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BootCampReviewResponseDto {
 
@@ -47,6 +49,26 @@ public class BootCampReviewResponseDto {
                     //.skills....
                     .build();
         }
+    }
 
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class PageResponse {
+        private List<Response> reviews;
+        private int totalPages;
+        private int curPage;
+
+        public static PageResponse fromEntityPage(Page<BootCampReview> bootCampReviews){
+
+            return PageResponse.builder()
+                    .reviews(bootCampReviews.getContent().stream()
+                            .map(Response::fromEntity)
+                            .collect(Collectors.toList()))
+                    .totalPages(bootCampReviews.getTotalPages())
+                    .curPage(bootCampReviews.getNumber())
+                    .build();
+        }
     }
 }
