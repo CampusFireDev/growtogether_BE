@@ -59,4 +59,8 @@ public class BootCampReviewController {
         return ResponseEntity.ok("부트캠프 리뷰 삭제가 완료되었습니다.");
     }
 
+    /**
+     * 부트캠프 조회
+     */
+
 }
