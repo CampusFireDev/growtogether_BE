@@ -19,10 +19,8 @@ public enum ErrorCode {
 
   INVALID_INPUT_DATA("잘못된 입력 데이터입니다.", BAD_REQUEST),
 
-  INTERNAL_SERVER_ERROR("서버 오류입니다.", HttpStatus.INTERNAL_SERVER_ERROR),
+  INTERNAL_SERVER_ERROR("서버 오류입니다.", HttpStatus.INTERNAL_SERVER_ERROR);
 
-
-  REVIEW_NOT_FOUND("부트캠프 후기 작성 아이디가 존재하지 않습니다.",BAD_REQUEST);
   private final String description;
 
   private final HttpStatus status;
