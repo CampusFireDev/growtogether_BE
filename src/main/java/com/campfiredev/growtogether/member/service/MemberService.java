@@ -7,7 +7,7 @@ import com.campfiredev.growtogether.member.entity.UserSkillEntity;
 import com.campfiredev.growtogether.member.repository.MemberRepository;
 import com.campfiredev.growtogether.member.repository.UserSkillRepository;
 import com.campfiredev.growtogether.skill.entity.SkillEntity;
-import com.campfiredev.growtogether.study.repository.SkillRepository;
+import com.campfiredev.growtogether.skill.repository.SkillRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
