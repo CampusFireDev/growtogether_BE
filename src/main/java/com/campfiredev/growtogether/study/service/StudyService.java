@@ -2,11 +2,11 @@ package com.campfiredev.growtogether.study.service;
 
 import com.campfiredev.growtogether.exception.custom.CustomException;
 import com.campfiredev.growtogether.exception.response.ErrorCode;
-import com.campfiredev.growtogether.skill.entity.SkillEntity;
-import com.campfiredev.growtogether.skill.repository.SkillRepository;
 import com.campfiredev.growtogether.study.dto.StudyDTO;
+import com.campfiredev.growtogether.study.entity.Skill;
 import com.campfiredev.growtogether.study.entity.SkillStudy;
 import com.campfiredev.growtogether.study.entity.Study;
+import com.campfiredev.growtogether.study.repository.SkillRepository;
 import com.campfiredev.growtogether.study.repository.SkillStudyRepository;
 import com.campfiredev.growtogether.study.repository.StudyRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,8 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.campfiredev.growtogether.exception.response.ErrorCode.END_DATE_AFTER_START_DATE;
-import static com.campfiredev.growtogether.exception.response.ErrorCode.START_DATE_PAST;
+import static com.campfiredev.growtogether.exception.response.ErrorCode.*;
 
 @Service
 @RequiredArgsConstructor
