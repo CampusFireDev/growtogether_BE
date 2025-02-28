@@ -22,10 +22,13 @@ public class AmazonS3Config {
 
     @Value("${cloud.aws.region}")
     private String region;
+    private String accessKey;
+    private String secretKey;
 
 
     @Bean
     public AmazonS3 amazonS3() {
+
         if (accessKey == null || secretKey == null || region == null) {
             throw new IllegalArgumentException("AWS Access Key, Secret Key 또는 Region이 설정되지 않았습니다.");
         }
