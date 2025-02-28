@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class MemberDto {
+public class MemberRegisterDto {
 
     @NotBlank(message = "닉네임은 필수입니다.")
     private String nickName;

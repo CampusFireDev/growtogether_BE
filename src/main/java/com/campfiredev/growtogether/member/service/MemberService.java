@@ -1,7 +1,7 @@
 package com.campfiredev.growtogether.member.service;
 
 import com.campfiredev.growtogether.mail.service.EmailService;
-import com.campfiredev.growtogether.member.dto.MemberDto;
+import com.campfiredev.growtogether.member.dto.MemberRegisterDto;
 import com.campfiredev.growtogether.member.entity.MemberEntity;
 import com.campfiredev.growtogether.member.entity.UserSkillEntity;
 import com.campfiredev.growtogether.member.repository.MemberRepository;
@@ -28,7 +28,7 @@ public class MemberService {
     private final EmailService emailService;
     private final S3Service s3Service;
 
-    public MemberEntity register(MemberDto request, MultipartFile profileImage) {
+    public MemberEntity register(MemberRegisterDto request, MultipartFile profileImage) {
         // 이메일 인증 여부 확인
         if (!emailService.verifyCode(request.getEmail(), request.getVerificationCode())) {
             throw new IllegalArgumentException("이메일 인증이 완료되지 않았습니다.");

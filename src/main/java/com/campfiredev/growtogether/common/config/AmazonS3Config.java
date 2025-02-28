@@ -1,4 +1,4 @@
-package com.campfiredev.growtogether.member.config;
+package com.campfiredev.growtogether.common.config;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;

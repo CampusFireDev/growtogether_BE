@@ -5,7 +5,7 @@ import java.util.Map;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public class KakaoUserInfo implements OAuth2UserInfo {
+public class KakaoMemberInfo implements OAuth2MemberInfo {
     
     private Map<String, Object> attributes;
 

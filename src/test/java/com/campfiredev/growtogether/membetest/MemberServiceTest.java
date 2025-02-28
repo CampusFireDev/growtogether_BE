@@ -1,7 +1,7 @@
 package com.campfiredev.growtogether.membetest;
 
 import com.campfiredev.growtogether.mail.service.EmailService;
-import com.campfiredev.growtogether.member.dto.MemberDto;
+import com.campfiredev.growtogether.member.dto.MemberRegisterDto;
 import com.campfiredev.growtogether.member.entity.MemberEntity;
 import com.campfiredev.growtogether.member.entity.UserSkillEntity;
 import com.campfiredev.growtogether.member.repository.MemberRepository;
@@ -62,7 +62,7 @@ class MemberServiceTest {
     @DisplayName("회원가입 성공 - 필수 입력값만 포함")
     void register_success_with_required_fields() {
         // Given
-        MemberDto request = new MemberDto();
+        MemberRegisterDto request = new MemberRegisterDto();
         request.setNickName("testUser");
         request.setEmail("test@example.com");
         request.setPhone("01012345678");
@@ -104,7 +104,7 @@ class MemberServiceTest {
     @DisplayName("회원가입 성공 - 프로필 이미지 포함")
     void register_success_with_profile_image() {
         // Given
-        MemberDto request = new MemberDto();
+        MemberRegisterDto request = new MemberRegisterDto();
         request.setNickName("testUser");
         request.setEmail("test@example.com");
         request.setPhone("01012345678");
@@ -143,7 +143,7 @@ class MemberServiceTest {
     @DisplayName("회원가입 성공 - 깃허브 URL과 기술 스택 포함")
     void register_success_with_github_and_skills() {
         // Given
-        MemberDto request = new MemberDto();
+        MemberRegisterDto request = new MemberRegisterDto();
         request.setNickName("testUser");
         request.setEmail("test@example.com");
         request.setPhone("01012345678");
