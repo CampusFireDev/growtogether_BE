@@ -32,7 +32,4 @@ public class MemberController {
         return ResponseEntity.ok(Map.of("message", "회원가입이 완료되었습니다.", "userId", member.getUserId()));
     }
 
-
-
-
 }

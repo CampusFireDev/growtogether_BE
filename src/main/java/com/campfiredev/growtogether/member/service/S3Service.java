@@ -8,7 +8,6 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,7 +21,7 @@ public class S3Service {
     private final AmazonS3 amazonS3;
 
     @Value("${cloud.aws.s3.bucket}")
-    private String bucketName;
+    private String bucket;
 
     // 파일 업로드 (파일 키 반환)
     public String uploadFile(MultipartFile file) {
@@ -33,7 +32,7 @@ public class S3Service {
             metadata.setContentType(file.getContentType());
             metadata.setContentLength(file.getSize());
 
-            amazonS3.putObject(new PutObjectRequest(bucketName, fileKey, file.getInputStream(), metadata)
+            amazonS3.putObject(new PutObjectRequest(bucket, fileKey, file.getInputStream(), metadata)
                     .withCannedAcl(CannedAccessControlList.PublicRead));
 
             return fileKey;  // 파일 키 반환
@@ -45,7 +44,7 @@ public class S3Service {
 
     public void deleteFile(String fileKey) {
         try {
-            amazonS3.deleteObject(new DeleteObjectRequest(bucketName, fileKey));
+            amazonS3.deleteObject(new DeleteObjectRequest(bucket, fileKey));
         } catch (AmazonServiceException e) {
             throw new RuntimeException("S3에서 파일 삭제 실패: " + e.getMessage());
         }
@@ -54,13 +53,13 @@ public class S3Service {
 
     // S3 URL 반환
     public String getFileUrl(String fileKey) {
-        return amazonS3.getUrl(bucketName, fileKey).toString();
+        return amazonS3.getUrl(bucket, fileKey).toString();
     }
 
 
     //   URL → 파일 키 변환
     public String extractFileKeyFromUrl(String fileUrl) {
-        String prefix = amazonS3.getUrl(bucketName, "").toString();
+        String prefix = amazonS3.getUrl(bucket, "").toString();
         return fileUrl.replace(prefix, "");
     }
 

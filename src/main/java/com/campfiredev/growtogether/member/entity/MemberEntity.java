@@ -1,5 +1,6 @@
 package com.campfiredev.growtogether.member.entity;
 
+import com.campfiredev.growtogether.member.entity.UserSkillEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
