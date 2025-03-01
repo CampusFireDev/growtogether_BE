@@ -1,54 +1,36 @@
 package com.campfiredev.growtogether.member.oauth2;
 
-import java.io.IOException;
-
-import com.campfiredev.growtogether.member.entity.SocialProvider;
-import com.campfiredev.growtogether.member.entity.WebtyUser;
-import com.campfiredev.growtogether.member.jwt.JwtUtil;
-import com.campfiredev.growtogether.member.jwt.RefreshToken;
-import com.campfiredev.growtogether.member.jwt.RefreshTokenRepository;
-import com.campfiredev.growtogether.member.repository.SocialProviderRepository;
-import com.campfiredev.growtogether.member.repository.UserRepository;
 import jakarta.servlet.ServletException;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
-import org.springframework.stereotype.Component;
-
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import org.springframework.stereotype.Component;
+
+import java.io.IOException;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class OAuthLoginSuccessHandler implements AuthenticationSuccessHandler {
-
+public class OAuthLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        // 로그 추가
+        // 로그 출력
         System.out.println("로그인 성공!");
-
         OAuth2AuthenticationToken token = (OAuth2AuthenticationToken) authentication;
         OAuth2User oAuth2User = token.getPrincipal();
-
-        // 카카오 사용자 정보 (예: 이메일, 닉네임 등)
         String email = oAuth2User.getAttribute("email");
         String nickname = oAuth2User.getAttribute("nickname");
-
-        // 콘솔에서 확인
         System.out.println("이메일: " + email);
         System.out.println("닉네임: " + nickname);
-
-        // 리디렉션할 URL로 이동
         response.sendRedirect("/home");
     }
+
 
 //    @Value("${jwt.redirect}")
 //    private String REDIRECT_URI; // 프론트엔드로 Jwt 토큰을 리다이렉트할 URI

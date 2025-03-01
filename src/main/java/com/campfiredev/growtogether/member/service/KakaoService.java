@@ -1,6 +1,5 @@
 package com.campfiredev.growtogether.member.service;
 
-
 import com.campfiredev.growtogether.member.config.ProviderConfig;
 import com.campfiredev.growtogether.member.config.RegistrationConfig;
 import com.campfiredev.growtogether.member.dto.KakaoTokenDto;

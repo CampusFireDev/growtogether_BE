@@ -17,7 +17,7 @@ public class ErrorResponse {
     this.description = errorCode.getDescription();
     this.status = errorCode.getStatus();
   }
-
+//
   public ErrorResponse(ErrorCode errorCode, String description){
     this.errorCode = errorCode;
     this.description = description;

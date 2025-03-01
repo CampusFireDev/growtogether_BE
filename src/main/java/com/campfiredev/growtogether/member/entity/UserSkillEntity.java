@@ -2,9 +2,9 @@ package com.campfiredev.growtogether.member.entity;
 
 import com.campfiredev.growtogether.skill.entity.SkillEntity;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @Entity
@@ -22,14 +22,14 @@ public class UserSkillEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private MemberEntity member;
+    private UserEntity user;
 
     @ManyToOne
     @JoinColumn(name = "skill_id", nullable = false)
     private SkillEntity skill;
 
-    public UserSkillEntity(MemberEntity member, SkillEntity skill) {
-        this.member = member;
+    public UserSkillEntity(UserEntity user, SkillEntity skill) {
+        this.user = user;
         this.skill = skill;
     }
 }

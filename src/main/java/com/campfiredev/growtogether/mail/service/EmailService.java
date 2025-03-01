@@ -60,8 +60,8 @@ public class EmailService {
 
     // 인증번호 검증
     public boolean verifyCode(String email, String code) {
-//        String storedCode = redisTemplate.opsForValue().get(EMAIL_PREFIX + email);
-        String storedCode = m.get(email);
+        String storedCode = redisTemplate.opsForValue().get(EMAIL_PREFIX + email);
+             storedCode = m.get(email);
         if (storedCode != null && storedCode.equals(code)) {
               redisTemplate.delete(EMAIL_PREFIX + email); // 인증 성공 후 코드 삭제
               m.remove(email);
