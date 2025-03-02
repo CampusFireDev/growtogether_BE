@@ -54,7 +54,7 @@ class JoinServiceImplTest {
   @BeforeEach
   void setUp() {
     member = MemberEntity.builder()
-        .userId(1L)
+        .memberId(1L)
         .build();
 
     study = Study.builder()

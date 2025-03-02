@@ -1,10 +1,10 @@
 package com.campfiredev.growtogether.member.service;
 
-import com.campfiredev.growtogether.member.config.ProviderConfig;
-import com.campfiredev.growtogether.member.config.RegistrationConfig;
+import com.campfiredev.growtogether.common.config.ProviderConfig;
+import com.campfiredev.growtogether.common.config.RegistrationConfig;
 import com.campfiredev.growtogether.member.dto.KakaoTokenDto;
 import com.campfiredev.growtogether.member.dto.KakaoUserDto;
-import com.campfiredev.growtogether.member.entity.UserEntity;
+import com.campfiredev.growtogether.member.entity.MemberEntity;
 import com.campfiredev.growtogether.member.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
@@ -22,7 +22,7 @@ import org.springframework.web.client.RestTemplate;
 public class KakaoService {
 
     private final RestTemplate restTemplate;
-    private final UserService userService;
+    private final MemberService memberService;
 
     private final RegistrationConfig registrationConfig;
     private final ProviderConfig providerConfig;
@@ -33,8 +33,8 @@ public class KakaoService {
     public String getAccessToken(String accessCode) {
         KakaoTokenDto kakaoToken = getKakaoToken(accessCode);
         KakaoUserDto kakaoUserInfo = getKakaoUserInfo(kakaoToken.getAccessToken());
-        UserEntity userEntity = userService.kakaoLogin(kakaoUserInfo);
-        return jwtUtil.generateAccessToken(userEntity.getUserId());
+        MemberEntity memberEntity = memberService.kakaoLogin(kakaoUserInfo);
+        return jwtUtil.generateAccessToken(memberEntity.getMemberId());
     }
 
     // 카카오 Token 요청

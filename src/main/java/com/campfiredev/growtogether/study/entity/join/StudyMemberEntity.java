@@ -2,7 +2,6 @@ package com.campfiredev.growtogether.study.entity.join;
 
 import static com.campfiredev.growtogether.study.type.StudyMemberType.NORMAL;
 import static com.campfiredev.growtogether.study.type.StudyMemberType.PENDING;
-
 import com.campfiredev.growtogether.common.entity.BaseEntity;
 import com.campfiredev.growtogether.member.entity.MemberEntity;
 import com.campfiredev.growtogether.study.entity.Study;
@@ -35,14 +34,14 @@ import org.hibernate.annotations.OnDeleteAction;
 @Builder
 @Table(name = "study_member",
     uniqueConstraints = {
-        @UniqueConstraint(name = "unique_study_user", columnNames = {"study_id", "user_id"})
+        @UniqueConstraint(name = "unique_study_user", columnNames = {"study_id", "memberId"})
     }
 )
 public class StudyMemberEntity extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "study_member_id")
+  @Column(name = "study_member_Id")
   private Long id;
 
   @Column(nullable = false)
@@ -58,7 +57,7 @@ public class StudyMemberEntity extends BaseEntity {
   private Study study;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "user_id", nullable = false)
+  @JoinColumn(name = "memberId", nullable = false)
   @OnDelete(action = OnDeleteAction.CASCADE)
   private MemberEntity member;
 

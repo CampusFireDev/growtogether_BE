@@ -31,7 +31,7 @@ public class StudyService {
 
     private final MemberRepository memberRepository;
 
-    public StudyDTO createStudy(StudyDTO dto, long userId) {
+    public StudyDTO createStudy(StudyDTO dto, long memberId) {
         validateDates(dto.getStudyStartDate(), dto.getStudyEndDate());
         
         List<SkillEntity> skills = skillRepository.findBySkillNameIn(dto.getSkillNames());

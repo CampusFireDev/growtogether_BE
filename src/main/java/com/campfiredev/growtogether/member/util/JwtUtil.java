@@ -28,11 +28,11 @@ public class JwtUtil {
     }
 
     // 액세스 토큰을 발급하는 메서드
-    public String generateAccessToken(Long userId) {
+    public String generateAccessToken(Long memberId) {
         log.info("액세스 토큰이 발행되었습니다.");
 
         return Jwts.builder()
-                   .claim("userId", userId.toString()) // 클레임에 userId 추가
+                   .claim("memberId",memberId.toString()) // 클레임에memberId 추가
                    .issuedAt(new Date())
                    .expiration(new Date(System.currentTimeMillis() + expirationTime))
                    .signWith(this.getSigningKey())
@@ -40,11 +40,11 @@ public class JwtUtil {
     }
 
     // 리프레쉬 토큰을 발급하는 메서드
-    public String generateRefreshToken(Long userId) {
+    public String generateRefreshToken(Long memberId) {
         log.info("리프레쉬 토큰이 발행되었습니다.");
 
         return Jwts.builder()
-                   .claim("userId", userId.toString()) // 클레임에 userId 추가
+                   .claim("memberId",memberId.toString()) // 클레임에memberId 추가
                    .issuedAt(new Date())
                    .expiration(new Date(System.currentTimeMillis() + expirationTime))
                    .signWith(this.getSigningKey())
@@ -62,16 +62,16 @@ public class JwtUtil {
     }
 
     // 토큰에서 유저 id를 반환하는 메서드
-    public String getUserIdFromToken(String token) {
+    public String getMemberIdFromToken(String token) {
         try {
-            String userId = Jwts.parser()
+            String memberId = Jwts.parser()
                                 .verifyWith(this.getSigningKey())
                                 .build()
                                 .parseSignedClaims(token)
                                 .getPayload()
-                                .get("userId", String.class);
+                                .get("memberId", String.class);
             log.info("유저 id를 반환합니다.");
-            return userId;
+            return memberId;
         } catch (JwtException | IllegalArgumentException e) {
             // 토큰이 유효하지 않은 경우
             log.warn("유효하지 않은 토큰입니다.");

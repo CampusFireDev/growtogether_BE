@@ -50,13 +50,13 @@ public class NoticeServiceImpl implements NoticeService {
   /**
    * 공지 생성
    *
-   * 로그인 개발 후 Long userId 파라미터 추가 예정 StudyEntity 개발 후 validateStudyLeader 메서드 추가 예정
+   * 로그인 개발 후 Long memberId 파라미터 추가 예정 StudyEntity 개발 후 validateStudyLeader 메서드 추가 예정
    */
   @Override
   public NoticeCreateDto.Response createNotice(Long studyId, NoticeCreateDto.Request request) {
 
     //StudyEntity 개발 후 추가 예정
-    //validateStudyLeader(userId, studyId);
+    //validateStudyLeader(memberId, studyId);
 
     return NoticeCreateDto.Response.fromEntity(noticeRepository.save(request.toEntity(studyId)));
   }
@@ -64,7 +64,7 @@ public class NoticeServiceImpl implements NoticeService {
   /**
    * 공지 수정
    *
-   * 로그인 개발 후 Long userId 파라미터 추가 예정 StudyEntity 개발 후 validateStudyLeader 메서드 추가 예정
+   * 로그인 개발 후 Long memberId 파라미터 추가 예정 StudyEntity 개발 후 validateStudyLeader 메서드 추가 예정
    */
   @Override
   public NoticeUpdateDto.Response updateNotice(Long noticeId, NoticeUpdateDto.Request request) {
@@ -72,7 +72,7 @@ public class NoticeServiceImpl implements NoticeService {
         .orElseThrow(() -> new CustomException(NOTICE_NOT_FOUND));
 
     //StudyEntity 개발 후 추가 예정
-    //validateStudyLeader(userId, noticeEntity.getStudy().getId());
+    //validateStudyLeader(memberId, noticeEntity.getStudy().getId());
 
     return NoticeUpdateDto.Response.fromEntity(
         noticeEntity.updateNotice(request.getTitle(), request.getContent()));
@@ -81,7 +81,7 @@ public class NoticeServiceImpl implements NoticeService {
   /**
    * 공지 삭제
    *
-   * 로그인 개발 후 Long userId 파라미터 추가 예정 StudyEntity 개발 후 validateStudyLeader 메서드 추가 예정
+   * 로그인 개발 후 Long memberId 파라미터 추가 예정 StudyEntity 개발 후 validateStudyLeader 메서드 추가 예정
    */
   @Override
   public void deleteNotice(Long noticeId){
@@ -89,7 +89,7 @@ public class NoticeServiceImpl implements NoticeService {
         .orElseThrow(() -> new CustomException(NOTICE_NOT_FOUND));
 
     //StudyEntity 개발 후 추가 예정
-    //validateStudyLeader(userId, noticeEntity.getStudy().getId());
+    //validateStudyLeader(memberId, noticeEntity.getStudy().getId());
 
     noticeRepository.deleteById(noticeId);
   }
@@ -98,11 +98,11 @@ public class NoticeServiceImpl implements NoticeService {
    * 스터디 팀장인지 확인
    * StudyEntity 개발 후 추가 예정
    */
-  private void validateStudyLeader(Long userId, Long studyId) {
-//    StudyMemberEntity studyMemberEntity = studyMemberRepository.findByUserIdAndStudyId(userId, studyId)
+  private void validateStudyLeader(Long memberId, Long studyId) {
+//    StudyMemberEntity StudyMemberEntity = studyMemberRepository.findBymemberIdAndStudyId(memberId, studyId)
 //        .orElseThrow(() -> new CustomException(NOT_A_STUDY_MEMBER));
 //
-//    if(studyMemberEntity.getStatus != LEADER){
+//    if(StudyMemberEntity.getStatus != LEADER){
 //      throw new CustomException(NOT_A_STUDY_LEADER);
 //    }
   }

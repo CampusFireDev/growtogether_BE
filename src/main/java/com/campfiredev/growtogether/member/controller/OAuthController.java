@@ -28,4 +28,5 @@ public class OAuthController {
 		Map<String, String> response = Map.of("accessToken", accessToken); // 불변 Map 사용
 		return ResponseEntity.ok(response);
 	}
+
 }

@@ -4,11 +4,11 @@ import com.campfiredev.growtogether.study.dto.join.StudyMemberListDto;
 
 public interface JoinService {
 
-  void join(Long memberId, Long studyId);
+  void join(Long UserEntity, Long studyId);
 
-  void confirmJoin(Long studyMemberId);
+  void confirmJoin(Long StudyMemberEntity);
 
-  void cancelJoin(Long studyMemberId);
+  void cancelJoin(Long StudyMemberEntity);
 
   StudyMemberListDto getPendingList(Long studyId);
 

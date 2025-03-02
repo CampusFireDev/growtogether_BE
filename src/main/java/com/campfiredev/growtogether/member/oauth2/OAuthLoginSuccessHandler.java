@@ -89,23 +89,23 @@ public class OAuthLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 //            log.info("기존 유저입니다.");
 //            socialProvider = existUser;
 //            user = existUser.getUser();
-//            refreshTokenRepository.deleteByUserId(user.getUserId());
+//            refreshTokenRepository.deleteBymemberId(user.getMemberId());
 //        }
 //
 //        log.info("PROVIDER : {}", provider);
 //        log.info("PROVIDER_ID : {}", providerId);
 //
 //        // 리프레쉬 토큰 발급 후 저장
-//        String refreshToken = jwtUtil.generateRefreshToken(user.getUserId(), REFRESH_TOKEN_EXPIRATION_TIME);
+//        String refreshToken = jwtUtil.generateRefreshToken(user.getMemberId(), REFRESH_TOKEN_EXPIRATION_TIME);
 //
 //        RefreshToken newRefreshToken = RefreshToken.builder()
-//                .userId(user.getUserId())
+//                .memberId(user.getMemberId())
 //                .token(refreshToken)
 //                .build();
 //        refreshTokenRepository.save(newRefreshToken);
 //
 //        // 액세스 토큰 발급
-//        String accessToken = jwtUtil.generateAccessToken(user.getUserId(), ACCESS_TOKEN_EXPIRATION_TIME);
+//        String accessToken = jwtUtil.generateAccessToken(user.getMemberId(), ACCESS_TOKEN_EXPIRATION_TIME);
 //
 //        // 이름, 액세스 토큰, 리프레쉬 토큰을 쿠키에 담아 리다이렉트
 //        String redirectUri = String.format(REDIRECT_URI);

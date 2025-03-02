@@ -4,12 +4,12 @@ import com.campfiredev.growtogether.mail.service.EmailService;
 import com.campfiredev.growtogether.skill.entity.SkillEntity;
 import com.campfiredev.growtogether.skill.repository.SkillRepository;
 import com.campfiredev.growtogether.member.dto.KakaoUserDto;
-import com.campfiredev.growtogether.member.dto.UserLoginDto;
-import com.campfiredev.growtogether.member.dto.UserRegisterDto;
-import com.campfiredev.growtogether.member.entity.UserEntity;
-import com.campfiredev.growtogether.member.entity.UserSkillEntity;
-import com.campfiredev.growtogether.member.repository.UserRepository;
-import com.campfiredev.growtogether.member.repository.UserSkillRepository;
+import com.campfiredev.growtogether.member.dto.MemberLoginDto;
+import com.campfiredev.growtogether.member.dto.MemberRegisterDto;
+import com.campfiredev.growtogether.member.entity.MemberEntity;
+import com.campfiredev.growtogether.member.entity.MemberSkillEntity;
+import com.campfiredev.growtogether.member.repository.MemberRepository;
+import com.campfiredev.growtogether.member.repository.MemberSkillRepository;
 import com.campfiredev.growtogether.member.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,11 +23,11 @@ import java.util.Optional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class UserService {
+public class MemberService {
 
-    private final UserRepository userRepository;
+    private final MemberRepository memberRepository;
     private final SkillRepository skillRepository;
-    private final UserSkillRepository userSkillRepository;
+    private final MemberSkillRepository memberSkillRepository;
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
     private final S3Service s3Service;
@@ -35,19 +35,19 @@ public class UserService {
     private final JwtUtil jwtUtil;
 
     @Transactional
-    public UserEntity register(UserRegisterDto request, MultipartFile profileImage) {
+    public MemberEntity register(MemberRegisterDto request, MultipartFile profileImage) {
         // 이메일 인증 여부 확인
         if (!emailService.verifyCode(request.getEmail(), request.getVerificationCode())) {
             throw new IllegalArgumentException("이메일 인증이 완료되지 않았습니다.");
         }
         // 중복 검사
-        if (userRepository.existsByEmail(request.getEmail())) {
+        if (memberRepository.existsByEmail(request.getEmail())) {
             throw new IllegalArgumentException("이미 사용 중인 이메일입니다.");
         }
-        if (userRepository.existsByNickName(request.getNickName())) {
+        if (memberRepository.existsByNickName(request.getNickName())) {
             throw new IllegalArgumentException("이미 사용 중인 닉네임입니다.");
         }
-        if (userRepository.existsByPhone(request.getPhone())) {
+        if (memberRepository.existsByPhone(request.getPhone())) {
             throw new IllegalArgumentException("이미 사용 중인 전화번호입니다.");
         }
 
@@ -58,7 +58,7 @@ public class UserService {
         }
 
         // 회원 저장
-        UserEntity user = userRepository.save(UserEntity.builder()
+        MemberEntity user = memberRepository.save(MemberEntity.builder()
                 .nickName(request.getNickName())
                 .email(request.getEmail())
                 .phone(request.getPhone())
@@ -71,29 +71,29 @@ public class UserService {
         if (request.getSkills() != null && !request.getSkills().isEmpty()) {
             List<SkillEntity> skills = skillRepository.findAllById(request.getSkills());
             for (SkillEntity skill : skills) {
-                userSkillRepository.save(new UserSkillEntity(user, skill));
+                memberSkillRepository.save(new MemberSkillEntity(user, skill));
             }
         }
 
         return user;
     }
 
-    public String userLogin(UserLoginDto userLoginDto) {
-        UserEntity user = userRepository.findByEmail(userLoginDto.email())
+    public String userLogin(MemberLoginDto memberLoginDto) {
+        MemberEntity user = memberRepository.findByEmail(memberLoginDto.email())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 이메일입니다."));
 
-        if (!passwordEncoder.matches(userLoginDto.password(), user.getPassword())) {
+        if (!passwordEncoder.matches(memberLoginDto.password(), user.getPassword())) {
             throw new IllegalArgumentException("비밀번호가 틀립니다.");
         }
 
-        return jwtUtil.generateAccessToken(user.getUserId());
+        return jwtUtil.generateAccessToken(user.getMemberId());
     }
 
     // 프로필 이미지 삭제
     @Transactional
-    public void deleteProfileImage(Long userId) {
+    public void deleteProfileImage(Long memberId) {
         // member 찾기
-        UserEntity member = userRepository.findById(userId)
+        MemberEntity member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
 
         //  기존 프로필 이미지가 있는지 확인
@@ -106,13 +106,13 @@ public class UserService {
 
         //DB에서 프로필 이미지 Key 제거
         member.setProfileImageKey(null);
-        userRepository.save(member);
+        memberRepository.save(member);
     }
 
     @Transactional
-    public String updateProfileImage(Long userId, MultipartFile profileImage) {
+    public String updateProfileImage(Long memberId, MultipartFile profileImage) {
         // 사용자 찾기
-        UserEntity member = userRepository.findById(userId)
+        MemberEntity member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
 
         //  기존 프로필 이미지 삭제 (있다면)
@@ -125,14 +125,14 @@ public class UserService {
 
         //  DB에 새로운 Key 저장
         member.setProfileImageKey(newImageKey);
-        userRepository.save(member);
+        memberRepository.save(member);
 
         return newImageKey;
     }
 
-    public String getProfileImageUrl(Long userId) {
+    public String getProfileImageUrl(Long memberId) {
         // 사용자 찾기
-        UserEntity member = userRepository.findById(userId)
+        MemberEntity member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다.")); // 예외 담당자가 수정 예정
 
         // 프로필 이미지 존재 여부 확인
@@ -144,15 +144,15 @@ public class UserService {
         return s3Service.getFileUrl(member.getProfileImageKey());
     }
 
-    public UserEntity kakaoLogin(KakaoUserDto kakaoUserDto) {
+    public MemberEntity kakaoLogin(KakaoUserDto kakaoUserDto) {
         // 카카오 고유 ID 확인
         String kakaoId = kakaoUserDto.getId();
 
         // DB 조회: 우리 서비스에 가입된 사용자인지 체크
-        Optional<UserEntity> user = userRepository.findByKakaoId(kakaoId);
+        Optional<MemberEntity> user = memberRepository.findByKakaoId(kakaoId);
 
         // 가입된 사용자가 있다면 로그인 처리, 없으면 신규 가입 처리
-        return user.orElseGet(() -> userRepository.save(UserEntity.builder()
+        return user.orElseGet(() -> memberRepository.save(MemberEntity.builder()
                 .kakaoId(kakaoId)
                 .nickName(kakaoUserDto.getProperties().getNickname())
                 .build()));

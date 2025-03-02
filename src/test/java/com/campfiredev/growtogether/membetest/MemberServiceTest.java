@@ -3,9 +3,9 @@ package com.campfiredev.growtogether.membetest;
 import com.campfiredev.growtogether.mail.service.EmailService;
 import com.campfiredev.growtogether.member.dto.MemberRegisterDto;
 import com.campfiredev.growtogether.member.entity.MemberEntity;
-import com.campfiredev.growtogether.member.entity.UserSkillEntity;
+import com.campfiredev.growtogether.member.entity.MemberSkillEntity;
 import com.campfiredev.growtogether.member.repository.MemberRepository;
-import com.campfiredev.growtogether.member.repository.UserSkillRepository;
+import com.campfiredev.growtogether.member.repository.MemberSkillRepository;
 import com.campfiredev.growtogether.member.service.MemberService;
 import com.campfiredev.growtogether.member.service.S3Service;
 import com.campfiredev.growtogether.skill.entity.SkillEntity;
@@ -39,7 +39,7 @@ class MemberServiceTest {
     private SkillRepository skillRepository;
 
     @Mock
-    private UserSkillRepository userSkillRepository;
+    private MemberSkillRepository memberSkillRepository;
 
     @Mock
     private PasswordEncoder passwordEncoder;
@@ -76,7 +76,7 @@ class MemberServiceTest {
         when(passwordEncoder.encode(anyString())).thenReturn("hashedPassword");
 
         MemberEntity savedMember = MemberEntity.builder()
-                .userId(1L)
+                .memberId(1L)
                 .nickName(request.getNickName())
                 .email(request.getEmail())
                 .phone(request.getPhone())
@@ -90,7 +90,7 @@ class MemberServiceTest {
 
         // Then
         assertNotNull(result);
-        assertEquals(1L, result.getUserId());
+        assertEquals(1L, result.getMemberId());
         assertEquals(request.getNickName(), result.getNickName());
         assertEquals(request.getEmail(), result.getEmail());
         assertEquals(request.getPhone(), result.getPhone());
@@ -119,7 +119,7 @@ class MemberServiceTest {
         when(s3Service.uploadFile(any(MultipartFile.class))).thenReturn("s3-key");
 
         MemberEntity savedMember = MemberEntity.builder()
-                .userId(1L)
+                .memberId(1L)
                 .nickName(request.getNickName())
                 .email(request.getEmail())
                 .phone(request.getPhone())
@@ -175,7 +175,7 @@ class MemberServiceTest {
         when(skillRepository.findAllById(anyList())).thenReturn(List.of(skill1, skill2));
 
         MemberEntity savedMember = MemberEntity.builder()
-                .userId(1L)
+                .memberId(1L)
                 .nickName(request.getNickName())
                 .email(request.getEmail())
                 .phone(request.getPhone())
@@ -193,6 +193,6 @@ class MemberServiceTest {
         assertEquals("https://github.com/testUser", result.getGithubUrl());
 
         verify(skillRepository, times(1)).findAllById(request.getSkills());
-        verify(userSkillRepository, times(2)).save(any(UserSkillEntity.class));
+        verify(memberSkillRepository, times(2)).save(any(MemberSkillEntity.class));
     }
 }

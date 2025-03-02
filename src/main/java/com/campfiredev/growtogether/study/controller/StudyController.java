@@ -16,8 +16,8 @@ public class StudyController {
 
     @PostMapping
     public StudyDTO createStudy(@Valid @RequestBody StudyDTO dto) {
-        long userId = 1;
-        return studyService.createStudy(dto, userId);
+        long memberId = 1;
+        return studyService.createStudy(dto,memberId);
     }
 
     @GetMapping

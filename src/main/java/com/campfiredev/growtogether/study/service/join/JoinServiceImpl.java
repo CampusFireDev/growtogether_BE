@@ -45,10 +45,10 @@ public class JoinServiceImpl implements JoinService {
   @Override
   public void join(Long memberId, Long studyId) {
     MemberEntity memberEntity = memberRepository.findById(memberId)
-        .orElseThrow(() -> new CustomException(USER_NOT_FOUND));
+            .orElseThrow(() -> new CustomException(USER_NOT_FOUND));
 
     Study studyEntity = studyRepository.findById(studyId)
-        .orElseThrow(() -> new CustomException(STUDY_NOT_FOUND));
+            .orElseThrow(() -> new CustomException(STUDY_NOT_FOUND));
 
     // 참가 조건 검증
     validateJoin(memberEntity, studyEntity);
@@ -67,7 +67,7 @@ public class JoinServiceImpl implements JoinService {
   @Override
   public void confirmJoin(Long studyMemberId) {
     StudyMemberEntity studyMemberEntity = joinRepository.findWithStudyAndMemberById(studyMemberId)
-        .orElseThrow(() -> new CustomException(USER_NOT_APPLIED));
+            .orElseThrow(() -> new CustomException(USER_NOT_APPLIED));
 
     validateConfirmJoin(studyMemberEntity);
 
@@ -77,8 +77,8 @@ public class JoinServiceImpl implements JoinService {
      * 포인트 확인 후 차감
      * 동시성 이슈로 인해 redisson lock 적용
      */
-    pointService.usePoint(studyMemberEntity.getMember().getUserId(),
-        studyMemberEntity.getStudy().getStudyCount() * 5);
+    pointService.usePoint(studyMemberEntity.getMember().getMemberId(),
+            studyMemberEntity.getStudy().getStudyCount() * 5);
   }
 
   /**
@@ -89,7 +89,7 @@ public class JoinServiceImpl implements JoinService {
   @Override
   public void cancelJoin(Long studyMemberId) {
     StudyMemberEntity studyMemberEntity = joinRepository.findWithStudyAndMemberById(studyMemberId)
-        .orElseThrow(() -> new CustomException(USER_NOT_APPLIED));
+            .orElseThrow(() -> new CustomException(USER_NOT_APPLIED));
 
     //validateCancelJoin(studyMemberEntity);
 
@@ -105,7 +105,7 @@ public class JoinServiceImpl implements JoinService {
   public StudyMemberListDto getPendingList(Long studyId) {
 
     List<StudyMemberEntity> list = joinRepository.findByStudyWithMembersInStatus(studyId,
-        List.of(PENDING));
+            List.of(PENDING));
 
     return StudyMemberListDto.fromEntity(list);
   }
@@ -119,7 +119,7 @@ public class JoinServiceImpl implements JoinService {
   public StudyMemberListDto getJoinList(Long studyId) {
 
     List<StudyMemberEntity> list = joinRepository.findByStudyWithMembersInStatus(studyId,
-        List.of(NORMAL, LEADER, KICK));
+            List.of(NORMAL, LEADER, KICK));
 
     return StudyMemberListDto.fromEntity(list);
   }
@@ -170,10 +170,9 @@ public class JoinServiceImpl implements JoinService {
     }
 
     joinRepository.findByMemberAndStudy(memberEntity, studyEntity)
-        .ifPresent(studyMember -> {
-          throw new CustomException(ALREADY_JOINED_STUDY);
-        });
+            .ifPresent(studyMember -> {
+              throw new CustomException(ALREADY_JOINED_STUDY);
+            });
   }
 
 }
-

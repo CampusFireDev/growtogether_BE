@@ -21,20 +21,20 @@ public class StudyMemberListDto {
   @AllArgsConstructor
   @Builder
   public static class Info {
-    private Long userId;
+    private Long memberId;
 
     private String nickname;
 
-    private Long studyMemberId;
+    private Long StudyMemberEntity;
   }
 
   public static StudyMemberListDto fromEntity(List<StudyMemberEntity> list){
 
     return new StudyMemberListDto(list.stream()
         .map(a -> Info.builder()
-            .userId(a.getMember().getUserId())
+            .memberId(a.getMember().getMemberId())
             .nickname(a.getMember().getNickName())
-            .studyMemberId(a.getId())
+            .StudyMemberEntity(a.getId())
             .build())
         .collect(Collectors.toList()));
   }

@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "USER", uniqueConstraints = {
+@Table(name = "users", uniqueConstraints = {
         @UniqueConstraint(columnNames = "email"),
         @UniqueConstraint(columnNames = "nick_name"),
         @UniqueConstraint(columnNames = "phone_number")
@@ -20,12 +20,12 @@ import java.util.List;
 @Getter
 @Builder
 @NoArgsConstructor
-public class UserEntity {
+public class MemberEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private Long userId;
+    @Column(name = "member_Id")
+    private Long memberId;
 
     // 카카오 로그인 회원
     @Column(name = "kakao_id", nullable = true, length = 30)
@@ -65,11 +65,11 @@ public class UserEntity {
 
     // 사용자 기술 매핑
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<UserSkillEntity> userSkills;
+    private List<MemberSkillEntity> userSkills;
 
     @Builder
-    public UserEntity(Long userId, String kakaoId, String nickName, String phone, String password, String email, Integer points, String githubUrl, String profileImageKey, LocalDateTime createdAt, LocalDateTime updatedAt, List<UserSkillEntity> userSkills) {
-        this.userId = userId;
+    public MemberEntity(Long memberId, String kakaoId, String nickName, String phone, String password, String email, Integer points, String githubUrl, String profileImageKey, LocalDateTime createdAt, LocalDateTime updatedAt, List<MemberSkillEntity> userSkills) {
+        this.memberId =memberId;
         this.kakaoId = kakaoId;
         this.nickName = nickName;
         this.phone = phone;

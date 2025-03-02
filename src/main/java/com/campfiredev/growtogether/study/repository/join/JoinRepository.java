@@ -17,12 +17,12 @@ public interface JoinRepository extends JpaRepository<StudyMemberEntity, Long> {
   @Query("SELECT sm FROM StudyMemberEntity sm " +
       "JOIN FETCH sm.study s " +
       "JOIN FETCH sm.member u " +
-      "WHERE sm.id = :studyMemberId")
+      "WHERE sm.id = :StudyMemberEntity")
   Optional<StudyMemberEntity> findWithStudyAndMemberById(
-      @Param("studyMemberId") Long studyMemberId);
+      @Param("StudyMemberEntity") Long StudyMemberEntity);
 
-  @Query("SELECT sm.member.userId FROM StudyMemberEntity sm WHERE sm.id = :studyMemberId")
-  Long getMemberIdByStudyMemberId(@Param("studyMemberId") Long studyMemberId);
+  @Query("SELECT sm.member.memberId FROM StudyMemberEntity sm WHERE sm.id = :StudyMemberEntity")
+  Long getUserEntityByStudyMemberEntity(@Param("StudyMemberEntity") Long StudyMemberEntity);
 
   @Query("SELECT sm FROM StudyMemberEntity sm " +
       "JOIN FETCH sm.member " +

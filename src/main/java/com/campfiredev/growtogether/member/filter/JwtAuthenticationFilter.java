@@ -22,7 +22,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String jwtToken = jwtUtil.getTokenFromHeader(request); // 요청에서 JWT를 추출
         if (jwtToken != null && jwtUtil.isTokenValid(jwtToken)) {  // JWT 검증
             // JWT 토큰에서 사용자 정보 추출하여 인증 처리
-            String userName = jwtUtil.getUserIdFromToken(jwtToken);
+            String userName = jwtUtil.getMemberIdFromToken(jwtToken);
             // 사용자 인증 처리
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userName, jwtToken);
             SecurityContextHolder.getContext().setAuthentication(authentication);
