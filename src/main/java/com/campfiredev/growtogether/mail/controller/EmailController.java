@@ -1,6 +1,5 @@
 package com.campfiredev.growtogether.mail.controller;
 
-
 import com.campfiredev.growtogether.mail.service.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -37,9 +37,9 @@ public class MemberService {
     @Transactional
     public MemberEntity register(MemberRegisterDto request, MultipartFile profileImage) {
         // 이메일 인증 여부 확인
-        if (!emailService.verifyCode(request.getEmail(), request.getVerificationCode())) {
-            throw new IllegalArgumentException("이메일 인증이 완료되지 않았습니다.");
-        }
+//        if (!emailService.verifyCode(request.getEmail(), request.getVerificationCode())) {
+//            throw new IllegalArgumentException("이메일 인증이 완료되지 않았습니다.");
+//        }
         // 중복 검사
         if (memberRepository.existsByEmail(request.getEmail())) {
             throw new IllegalArgumentException("이미 사용 중인 이메일입니다.");

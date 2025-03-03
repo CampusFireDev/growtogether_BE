@@ -1,5 +1,4 @@
 package com.campfiredev.growtogether.mail.service;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -49,8 +48,8 @@ public class EmailService {
             mailSender.send(message);
 
             // Redis에 저장 (5분 동안 유효)
-            redisTemplate.opsForValue().set(EMAIL_PREFIX + toEmail, code, EXPIRATION_TIME, TimeUnit.MINUTES);
-            m.put(toEmail, code);
+           redisTemplate.opsForValue().set(EMAIL_PREFIX + toEmail, code, EXPIRATION_TIME, TimeUnit.MINUTES);
+ //           m.put(toEmail, code);
             logger.info("이메일 인증 코드 [{}] 가 {} 에게 전송되었습니다.", code, toEmail);
         } catch (MessagingException e) {
             logger.error("이메일 전송 실패: {}", e.getMessage());
@@ -61,10 +60,10 @@ public class EmailService {
     // 인증번호 검증
     public boolean verifyCode(String email, String code) {
         String storedCode = redisTemplate.opsForValue().get(EMAIL_PREFIX + email);
-             storedCode = m.get(email);
+ //       String storedCode = m.get(email);
         if (storedCode != null && storedCode.equals(code)) {
-              redisTemplate.delete(EMAIL_PREFIX + email); // 인증 성공 후 코드 삭제
-              m.remove(email);
+            redisTemplate.delete(EMAIL_PREFIX + email); // 인증 성공 후 코드 삭제
+            m.remove(email);
             return true;
         }
         return false;
