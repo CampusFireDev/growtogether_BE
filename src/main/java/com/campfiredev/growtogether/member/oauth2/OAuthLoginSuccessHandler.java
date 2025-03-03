@@ -1,5 +1,6 @@
 package com.campfiredev.growtogether.member.oauth2;
 
+import com.campfiredev.growtogether.member.repository.MemberRepository;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -45,7 +46,7 @@ public class OAuthLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 //
 //    private final JwtUtil jwtUtil;
 //    private final SocialProviderRepository socialProviderRepository;
-//    private final UserRepository userRepository;
+//    private final MemberRepository memberRepository;
 //    private final RefreshTokenRepository refreshTokenRepository;
 //
 //    @Override
@@ -80,7 +81,7 @@ public class OAuthLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 //                    .nickname("nickname")
 //                    .socialProvider(socialProvider)
 //                    .build();
-//            userRepository.save(user);
+//            MemberRepository.save(user);
 //
 //            socialProvider.setUser(user);
 //            socialProviderRepository.save(socialProvider);

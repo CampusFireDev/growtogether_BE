@@ -140,7 +140,7 @@ public class MemberService {
             throw new IllegalArgumentException("사용자의 프로필 이미지가 없습니다.");
         }
 
-        // ⃣ S3에서 파일 URL 반환
+        // S3에서 파일 URL 반환
         return s3Service.getFileUrl(member.getProfileImageKey());
     }
 

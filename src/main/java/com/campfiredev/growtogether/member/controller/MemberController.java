@@ -27,6 +27,7 @@ public class MemberController {
         return ResponseEntity.ok(Map.of("message", "회원가입이 완료되었습니다.", "user", user));
     }
 
+   // 회원 로그인 api
     @PostMapping("/memberLogin")
     public ResponseEntity<?> userLogin(@RequestBody MemberLoginDto memberLoginDto) {
         String accessToken = memberService.userLogin(memberLoginDto);

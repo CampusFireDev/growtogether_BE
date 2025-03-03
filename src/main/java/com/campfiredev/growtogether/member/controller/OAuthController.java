@@ -25,7 +25,7 @@ public class OAuthController {
 
 		httpServletResponse.setHeader("Authorization", "Bearer " + accessToken);
 
-		Map<String, String> response = Map.of("accessToken", accessToken); // 불변 Map 사용
+		Map<String, String> response = Map.of("accessToken", accessToken);
 		return ResponseEntity.ok(response);
 	}
 
