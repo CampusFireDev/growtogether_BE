@@ -45,11 +45,11 @@ public class Study extends BaseEntity {
 
     private Integer studyCount;
 
-    @OneToMany(mappedBy = "study", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
     private List<SkillStudy> skillStudies;
 
     @ManyToOne
-    @JoinColumn(name = "memberId", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private MemberEntity member;
 
     public static Study fromDTO(StudyDTO dto) {
@@ -62,7 +62,7 @@ public class Study extends BaseEntity {
                 .studyEndDate(dto.getStudyEndDate())
                 .isDeleted(false)
                 .studyStatus(StudyStatus.PROGRESS)
-                .participant(0)
+                .participant(1)
                 .type(dto.getType())
                 .studyCount(0)
                 .build();
@@ -75,4 +75,19 @@ public class Study extends BaseEntity {
     public void setAuthor(MemberEntity author) {
         this.member = author;
     }
+
+    public void updateViewCount() {
+        this.viewCount++;
+    }
+    public void updateFromDto(StudyDTO dto, List<SkillStudy> newSkillStudies) {
+        this.title = dto.getTitle();
+        this.description = dto.getDescription();
+        this.maxParticipant = dto.getMaxParticipant();
+        this.studyStartDate = dto.getStudyStartDate();
+        this.studyEndDate = dto.getStudyEndDate();
+        this.type = dto.getType();
+        this.skillStudies.addAll(newSkillStudies);
+    }
+
+
 }
