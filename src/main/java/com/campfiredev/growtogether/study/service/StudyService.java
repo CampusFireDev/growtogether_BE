@@ -1,6 +1,5 @@
 package com.campfiredev.growtogether.study.service;
 
-
 import com.campfiredev.growtogether.exception.custom.CustomException;
 import com.campfiredev.growtogether.member.entity.MemberEntity;
 import com.campfiredev.growtogether.member.repository.MemberRepository;

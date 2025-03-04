@@ -150,7 +150,7 @@ public class JoinServiceImpl implements JoinService {
 
     //로그인 완성될때까지 보류
     //현재 로그인 한 사용자 정보 가져와서 해당 스터디 팀장인지 확인
-//    StudyMemberEntity leader = joinRepository.findByUserIdAndStudyId(userId, studyMemberEntity.getStudy().getId())
+//    StudyMemberEntity leader = joinRepository.findByMemberIdAndStudyId(memberId, studyMemberEntity.getStudy().getId())
 //        .orElseThrow(() -> new CustomException(NOT_A_STUDY_MEMBER));
 //
 //    if(leader.getStatus != LEADER){

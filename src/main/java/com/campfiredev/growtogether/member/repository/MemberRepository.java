@@ -1,7 +1,7 @@
 package com.campfiredev.growtogether.member.repository;
 
-import com.campfiredev.growtogether.member.entity.MemberEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import com.campfiredev.growtogether.member.entity.MemberEntity;
 
 import java.util.Optional;
 
@@ -23,4 +23,6 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
     // 카카오 아이디로 서비스 회원 검증하기
     Optional<MemberEntity> findByKakaoId(String kakaoId);
 
+    
+    Optional<MemberEntity> findByMemberId(Long memberId);
 }
