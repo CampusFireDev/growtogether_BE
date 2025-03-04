@@ -11,7 +11,6 @@ import org.springframework.web.client.RestTemplate;
 @EnableConfigurationProperties({
         ProviderConfig.class,
         RegistrationConfig.class,
-        PayConfig.class,
 })
 public class BeanConfig {
 
