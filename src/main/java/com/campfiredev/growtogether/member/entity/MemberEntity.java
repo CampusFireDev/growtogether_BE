@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "member", uniqueConstraints = {
+@Table(name = "users", uniqueConstraints = {
         @UniqueConstraint(columnNames = "email"),
         @UniqueConstraint(columnNames = "nick_name"),
         @UniqueConstraint(columnNames = "phone_number")
@@ -36,7 +36,7 @@ public class MemberEntity {
 
     @Column(name = "phone_number", nullable = true, length = 20)
     private String phone;
-    
+
     // 카카오 로그인 경우 null
     @Column(name = "password", nullable = true, length = 100)
     private String password;
@@ -45,6 +45,7 @@ public class MemberEntity {
     @Column(name = "email", nullable = true, length = 30)
     private String email;
 
+    @Setter
     @Builder.Default
     private Integer points = 100;
 
