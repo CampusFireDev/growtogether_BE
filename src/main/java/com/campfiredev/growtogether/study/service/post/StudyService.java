@@ -175,7 +175,7 @@ public class StudyService {
     public List<StudyDTO> getPopularStudies() {
         Pageable pageable = PageRequest.of(0, 3);
         return studyRepository.findByPopularity(pageable).stream()
-                .map(StudyDTO::fromEntity)
+                .map(this::getStudyDTO)
                 .toList();
 
     }
